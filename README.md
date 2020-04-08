@@ -1,1 +1,2 @@
-# EC526 Project -- Parallel t-Distributed Stochastic Neighbor Embedding
+# EC526 Project
+# Parallel t-Distributed Stochastic Neighbor Embedding
