@@ -1,2 +1,7 @@
-.png
+*.png
 a.out
+sbs*
+*.dat
+.vscode
+test_iris
+test_mnist

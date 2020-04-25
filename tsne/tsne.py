@@ -13,7 +13,7 @@
 #  Copyright (c) 2008 Tilburg University. All rights reserved.
 
 import numpy as np
-import pylab
+# import pylab
 
 
 def Hbeta(D=np.array([]), beta=1.0):
@@ -186,5 +186,24 @@ if __name__ == "__main__":
     X = np.loadtxt("mnist2500_X.txt")
     labels = np.loadtxt("mnist2500_labels.txt")
     Y = tsne(X, 2, 50, 20.0)
-    pylab.scatter(Y[:, 0], Y[:, 1], 20, labels)
-    pylab.show()
+    # pylab.scatter(Y[:, 0], Y[:, 1], 20, labels)
+    # pylab.show()
+
+
+    ### RUN IRIS ###
+
+    # import matplotlib.pyplot as plt
+
+    # iris_data = np.loadtxt('iris.data', delimiter=',', dtype=np.string_)
+    # colormap = {
+    #     b'Iris-setosa': 0,
+    #     b'Iris-versicolor': 1,
+    #     b'Iris-virginica': 2
+    # } 
+    # colorlist = np.array([colormap[i.tostring()] for i in iris_data[:, 4]])
+
+    # X = iris_data[:, :4].astype(np.float)
+    # iris_out = tsne(X, 2, 4, 20.0)
+
+    # plt.scatter(iris_out[:, 0], iris_out[:, 1], c=colorlist)
+    # plt.savefig('tsne_iris.png')
