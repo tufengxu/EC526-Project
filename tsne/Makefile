@@ -16,13 +16,17 @@ test_iris: test.cpp tsne.cpp iris.data
 test_mnist: test.cpp tsne.cpp mnist2500_labels.txt
 	$(CXX) -fopenmp -l gomp test.cpp -o test_mnist
 
-test: sbs_test_py.py sbs_test_cpp.cpp test.cpp tsne.cpp iris.data
-	$(CXX) sbs_test_cpp.cpp -o sbs_test_cpp
-	echo "CPP:"
-	./sbs_test_cpp
-	echo "PYTHON:"
-	python3 sbs_test_py.py
+no_paralle: test.cpp tsne.cpp mnist2500_labels.txt
+	$(CXX) -D NO_PARALLEL test.cpp -o test_mnist_nop
+	./test_mnist_nop
+	python3 plot_mnist.py
 
+# test: sbs_test_py.py sbs_test_cpp.cpp test.cpp tsne.cpp iris.data
+# 	$(CXX) sbs_test_cpp.cpp -o sbs_test_cpp
+# 	echo "CPP:"
+# 	./sbs_test_cpp
+# 	echo "PYTHON:"
+# 	python3 sbs_test_py.py
 
 clean:
 	rm tsne_*.dat a.out test_iris *.png

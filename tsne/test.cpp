@@ -1,4 +1,8 @@
+#ifndef NO_PARALLEL
 #include "tsne.cpp"
+#else
+#include "tsne_no_parallel.cpp"
+#endif
 #include <fstream>
 #include <sstream>
 #include <string>

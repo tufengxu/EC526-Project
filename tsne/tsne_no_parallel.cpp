@@ -33,7 +33,6 @@ MatrixXd x2p(const MatrixXd &X, const double tol, const double perplexity) {
   MatrixXd beta = MatrixXd::Ones(n, 1);
   auto logU = log(perplexity);
 
-  #pragma omp parallel for
   for (int i = 0; i < n; i++) {
     auto beta_min = std::numeric_limits<double>::min();
     auto beta_max = std::numeric_limits<double>::max();
@@ -119,7 +118,6 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
 
     // PQ : n x n
     // num : n x n
-    #pragma omp parallel for
     for (int i = 0; i < n; i++) {
       dY.row(i) = (PQ.col(i).cwiseProduct(num.col(i)))
                       .replicate(1, out_dims)
