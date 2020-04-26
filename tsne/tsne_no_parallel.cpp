@@ -1,6 +1,6 @@
 #include "tsne.h"
-#include <iostream>
 #include <chrono>
+#include <iostream>
 
 pair<MatrixXd, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
                                const double beta = 1.0) {
@@ -93,11 +93,17 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
 
   // Computing P-values
   std::cout << "# Computing P-values ..." << std::endl;
+  auto PVstart = std::chrono::high_resolution_clock::now();
   auto P = x2p(X, 1e-5, perplexity);
   P = P + P.transpose().eval();
   P = 4.0 * P / P.sum();
   P = P.cwiseMax(1e-12).eval();
+  auto PVend = std::chrono::high_resolution_clock::now();
+  auto PVdur =
+      std::chrono::duration_cast<std::chrono::milliseconds>(PVend - PVstart);
+  std::cout << "# Time Spent: " << PVdur.count() << "ms" << std::endl;
 
+  std::cout << "# Start Gradient Descent ..." << std::endl;
   auto start = std::chrono::high_resolution_clock::now();
   for (int iter = 0; iter < max_iter; iter++) {
     auto sum_Y = Y.cwiseProduct(Y).rowwise().sum();
@@ -143,8 +149,10 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
     if ((iter + 1) % 100 == 0) {
       auto c = (P.array() * (P.cwiseQuotient(Q).array().log())).sum();
       auto stop = std::chrono::high_resolution_clock::now();
-      auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
-      std::cout << "# Iter: " << iter + 1 << ", err: " << c << ", time: " << duration.count() << "s" << std::endl;
+      auto duration =
+          std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+      std::cout << "# Iter: " << iter + 1 << ", err: " << c
+                << ", time: " << duration.count() << "s" << std::endl;
       start = std::chrono::high_resolution_clock::now();
     }
     if (iter == 100)
