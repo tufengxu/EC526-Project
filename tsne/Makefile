@@ -1,4 +1,6 @@
 CXX=g++
+CXX_FLAGS=-Wall -O2
+OMP_FLAGS=-fopenmp -l gomp
 
 all: test_mnist_plot
 
@@ -11,13 +13,13 @@ test_iris_plot: test_iris iris.data
 	python3 plot_iris.py
 
 test_iris: test.cpp tsne.cpp iris.data
-	$(CXX) -fopenmp -l gomp test.cpp -o test_iris
+	$(CXX) $(OMP_FLAGS) $(CXX_FLAGS) test.cpp -o test_iris
 
 test_mnist: test.cpp tsne.cpp mnist2500_labels.txt
-	$(CXX) -fopenmp -l gomp test.cpp -o test_mnist
+	$(CXX) $(OMP_FLAGS) $(CXX_FLAGS) test.cpp -o test_mnist
 
 no_parallel: test.cpp tsne.cpp mnist2500_X.txt mnist2500_labels.txt
-	$(CXX) -D NO_PARALLEL test.cpp -o test_mnist_nop
+	$(CXX) -D NO_PARALLEL $(CXX_FLAGS) test.cpp -o test_mnist_nop
 	./test_mnist_nop
 	python3 plot_mnist.py
 

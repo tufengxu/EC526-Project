@@ -24,7 +24,6 @@ MatrixXd PCA(const MatrixXd &X, const int out_dims) {
 
 MatrixXd x2p(const MatrixXd &X, const double tol, const double perplexity) {
   auto n = X.rows();
-  auto d = X.cols();
   MatrixXd sum_X = X.cwiseProduct(X).rowwise().sum();
   MatrixXd D =
       ((-2 * X * X.transpose()) + sum_X.replicate(1, X.rows())).transpose() +
@@ -83,7 +82,6 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
               const double final_momentum = 0.8) {
   auto X_pca = PCA(X, init_dims);
   auto n = X_pca.rows();
-  auto d = X_pca.cols();
 
   auto eta = 500;
   auto min_gain = 0.01;
@@ -142,7 +140,7 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
     iY = momentum * iY - eta * (gains.cwiseProduct(dY));
     Y = Y + iY;
     Y = Y - Y.colwise().mean().eval().replicate(n, 1);
-    if ((iter + 1) % 10 == 0) {
+    if ((iter + 1) % 100 == 0) {
       auto c = (P.array() * (P.cwiseQuotient(Q).array().log())).sum();
       auto stop = std::chrono::high_resolution_clock::now();
       auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);

@@ -30,7 +30,6 @@ int main() {
 MatrixXd load_iris() {
   std::ifstream iris_data("iris.data");
   MatrixXd iris_mat(150, 4);
-  double temp = 0;
   std::string temp_str;
   std::vector<double> iris_vec;
   while (std::getline(iris_data, temp_str)) {
