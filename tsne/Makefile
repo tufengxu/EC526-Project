@@ -16,7 +16,7 @@ test_iris: test.cpp tsne.cpp iris.data
 test_mnist: test.cpp tsne.cpp mnist2500_labels.txt
 	$(CXX) -fopenmp -l gomp test.cpp -o test_mnist
 
-no_paralle: test.cpp tsne.cpp mnist2500_labels.txt
+no_parallel: test.cpp tsne.cpp mnist2500_X.txt mnist2500_labels.txt
 	$(CXX) -D NO_PARALLEL test.cpp -o test_mnist_nop
 	./test_mnist_nop
 	python3 plot_mnist.py
