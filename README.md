@@ -6,7 +6,7 @@
 * Yuhao Zhou
 
 ## Technical Report
-See [`Documentation/report.pdf`](./Documentation)
+See [`Documentation/Report_EC526.pdf`](./Documentation)
 
 ## Requirements
 * `GCC Version 9.3.0`: local setup, but any reasonable version (i.e. >= GCC 5) should work properly.
