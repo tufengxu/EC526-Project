@@ -11,20 +11,28 @@
 MatrixXd load_iris();
 MatrixXd load_mnist();
 
+#ifndef IRIS
 const std::string result_path = "tsne_mnist.dat";
+#else
+const std::string result_path = "tsne_iris.dat";
+#endif
 
 int main() {
-    std::cout << "# Reading Data ..." << std::endl;
-    auto data_mat = load_mnist();
+  std::cout << "# Reading Data ..." << std::endl;
+#ifndef IRIS
+  auto data_mat = load_mnist();
+#else
+  auto data_mat = load_iris();
+#endif
 
-    std::cout << "# tSNE Start ..." << std::endl;
-    MatrixXd result = tSNE(data_mat, 2, 50, 20.0);
-    
-    std::ofstream data_store(result_path, std::ios::trunc);
-    
-    data_store << result;
+  std::cout << "# tSNE Start ..." << std::endl;
+  MatrixXd result = tSNE(data_mat, 2, -1, 30.0, 1000);
 
-    return 0;
+  std::ofstream data_store(result_path, std::ios::trunc);
+
+  data_store << result;
+
+  return 0;
 }
 
 MatrixXd load_iris() {

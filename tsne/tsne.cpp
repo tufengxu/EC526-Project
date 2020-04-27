@@ -3,7 +3,7 @@
 #include <iostream>
 
 pair<MatrixXd, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
-                               const double beta = 1.0) {
+                               const double beta = 0.5) {
   MatrixXd _P = (-row * beta);
   MatrixXd P = _P.array().exp();
   auto sum_P = P.sum();
@@ -84,7 +84,7 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
   auto X_pca = PCA(X, init_dims);
   auto n = X_pca.rows();
 
-  auto eta = 500.0;
+  auto eta = 10.0;
   auto min_gain = 0.01;
 
   MatrixXd Y = MatrixXd::Random(n, out_dims);
@@ -95,7 +95,7 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
   // Computing P-values
   std::cout << "# Computing P-values ..." << std::endl;
   auto PVstart = std::chrono::high_resolution_clock::now();
-  auto P = x2p(X, 1e-5, perplexity);
+  auto P = x2p(X, 1e-7, perplexity);
   P = P + P.transpose().eval();
   P = 4.0 * P / P.sum();
   P = P.cwiseMax(1e-12).eval();
