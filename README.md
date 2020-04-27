@@ -2,7 +2,7 @@
 > Parallel t-Distributed Stochastic Neighbor Embedding
 
 ## Group Member
-* Fengxu TU
+* Fengxu Tu
 * Yuhao Zhou
 
 ## Technical Report
