@@ -9,7 +9,7 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using std::pair;
 
-pair<MatrixXd, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
+pair<double, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
                                const double beta);
 MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
               const int perplexity, const int max_iter,
