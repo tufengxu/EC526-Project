@@ -26,7 +26,7 @@ int main() {
 #endif
 
   std::cout << "# tSNE Start ..." << std::endl;
-  MatrixXd result = tSNE(data_mat, 2, -1, 30.0, 1000);
+  MatrixXd result = tSNE(data_mat, 2, -1, 20.0, 1000);
 
   std::ofstream data_store(result_path, std::ios::trunc);
 
