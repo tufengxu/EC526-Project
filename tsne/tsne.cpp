@@ -2,12 +2,12 @@
 #include <chrono>
 #include <iostream>
 
-pair<MatrixXd, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
+pair<double, MatrixXd> Hbeta(const Ref<const MatrixXd> &row,
                                const double beta = 0.5) {
   MatrixXd _P = (-row * beta);
   MatrixXd P = _P.array().exp();
   auto sum_P = P.sum();
-  MatrixXd H = log(sum_P) + (beta * row.cwiseProduct(P)).array();
+  auto H = log(sum_P) + beta * (row.cwiseProduct(P)).array().sum() / sum_P;
   P = P / sum_P;
   return std::make_pair(H, P);
 }
@@ -84,7 +84,7 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
   auto X_pca = PCA(X, init_dims);
   auto n = X_pca.rows();
 
-  auto eta = 10.0;
+  auto eta = 500.0;
   auto min_gain = 0.01;
 
   MatrixXd Y = MatrixXd::Random(n, out_dims);
@@ -158,7 +158,7 @@ MatrixXd tSNE(const MatrixXd &X, const int out_dims, const int init_dims,
       start = std::chrono::high_resolution_clock::now();
     }
     if (iter == 100)
-      P = P / 4;
+      P = P / 4.0;
   }
 
   return Y;
