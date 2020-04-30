@@ -6,3 +6,5 @@ sbs*
 test_iris
 test_mnist
 tsne.py
+test_mnist_nop
+test_iris_nop
