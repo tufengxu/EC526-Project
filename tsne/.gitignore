@@ -5,3 +5,4 @@ sbs*
 .vscode
 test_iris
 test_mnist
+tsne.py

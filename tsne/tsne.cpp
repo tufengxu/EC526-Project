@@ -44,10 +44,10 @@ MatrixXd x2p(const MatrixXd &X, const double tol, const double perplexity) {
       Di(0, idx) = D(i, Didx);
     }
     auto HP = Hbeta(Di, beta(i, 0));
-    MatrixXd Hdiff = HP.first.array() - logU;
+    auto Hdiff = HP.first - logU;
     auto tries = 0;
-    while ((Hdiff.cwiseAbs().array() > tol).all() && tries++ < 50) {
-      if ((Hdiff.array() > 0).all()) {
+    while ((std::abs(Hdiff) > tol) && tries++ < 50) {
+      if (Hdiff > 0) {
         beta_min = beta(i, 0);
         if (beta_max == std::numeric_limits<double>::max() ||
             beta_max == std::numeric_limits<double>::min()) {
@@ -65,7 +65,7 @@ MatrixXd x2p(const MatrixXd &X, const double tol, const double perplexity) {
         }
       }
       HP = Hbeta(Di, beta(i, 0));
-      Hdiff = HP.first.array() - logU;
+      Hdiff = HP.first - logU;
     }
     for (int idx = 0, Didx = 0; idx < Di.cols(); idx++, Didx++) {
       if (Didx == i) {
